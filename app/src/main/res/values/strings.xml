@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PracticeWork</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_add">Add</string>
+    <string name="action_delete">DELETE</string>
+
+    <string name="place">Place</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="datetime">Date/time</string>
+
+    <string name="set">SET</string>
+
+
+</resources>
