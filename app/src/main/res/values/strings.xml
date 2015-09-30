@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">PracticeWork</string>
+    <string name="OK">OK</string>
+    <string name="CANCEL">CANCEL</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -12,6 +14,15 @@
     <string name="datetime">Date/time</string>
 
     <string name="set">SET</string>
+    <string name="set_district">SET DISTRICT</string>
+    <string name="label_selectTheDistrict">Please, select a district</string>
 
+    <string-array name="array_districts">
+        <item>Голосеевский</item>
+        <item>Печерский</item>
+        <item>Соломенский</item>
+        <item>Дарницкий</item>
+        <item>Оболонский</item>
+    </string-array>
 
 </resources>

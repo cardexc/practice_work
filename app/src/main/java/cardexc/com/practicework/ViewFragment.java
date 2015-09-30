@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import cardexc.com.practicework.adapters.AdvertisingCursorAdapter;
+
 
 public class ViewFragment extends Fragment {
 

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcelable;
+
 import cardexc.com.practicework.DBContract.*;
 
 public class AdvertisingDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "AdvertisingDB";
 
     private final String Advertising_DROP_TABLE = "DROP TABLE IF EXISTS " + AdvertisingEntry.TABLE_NAME;
@@ -20,6 +22,7 @@ public class AdvertisingDBHelper extends SQLiteOpenHelper {
             + AdvertisingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + AdvertisingEntry.DATETIME + " TEXT, "
             + AdvertisingEntry.PLACE + " TEXT, "
+            + AdvertisingEntry.DISTRICT + " TEXT, "
             + AdvertisingEntry.IMAGE + " BLOB "
             + " );";
 
@@ -52,11 +55,14 @@ public class AdvertisingDBHelper extends SQLiteOpenHelper {
 
     public void insertAd(Intent intent) {
 
+        Place place = (Place) intent.getParcelableExtra("place");
+
         ContentValues cv = new ContentValues();
-        
-        cv.put(AdvertisingEntry.PLACE, intent.getStringExtra("place"));
-        cv.put(AdvertisingEntry.DATETIME, intent.getStringExtra("datetime"));
-        cv.put(AdvertisingEntry.IMAGE, intent.getByteArrayExtra("image"));
+
+        cv.put(AdvertisingEntry.PLACE, place.getPlace());
+        cv.put(AdvertisingEntry.DATETIME, place.getDateTime());
+        cv.put(AdvertisingEntry.IMAGE, place.getImageArray());
+        cv.put(AdvertisingEntry.DISTRICT, place.getDistrict());
 
         SQLiteDatabase writableDatabase = getWritableDatabase();
 

@@ -17,13 +17,38 @@
         android:layout_weight="15"
         android:orientation="vertical">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addLayout_button_setDistrict"
+            android:text="@string/set_district"
+            style="@style/contact_raised_buttons"
+            android:gravity="left|fill_vertical"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addLayout_selectedDistrict"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:paddingLeft="16dp"
+            android:visibility="gone"
+            android:layout_marginBottom="6dp" />
+
         <EditText
             android:id="@+id/addLayout_editText_place"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_margin="6dp"
+            android:layout_height="wrap_content"
             android:hint="@string/place"
-            android:padding="16dp" />
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="6dp"
+            android:paddingLeft="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:longClickable="false">
 
                 <EditText
                     android:id="@+id/addLayout_editText_date"

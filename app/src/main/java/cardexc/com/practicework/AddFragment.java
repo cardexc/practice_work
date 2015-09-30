@@ -1,10 +1,12 @@
 package cardexc.com.practicework;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,10 +21,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.io.ByteArrayOutputStream;
@@ -35,16 +40,17 @@ public class AddFragment extends Fragment {
     private OnAddFinish mActivity;
 
     private ImageView camera_image;
+    private TextView selectedDistrict;
     private EditText editText_place;
     private static EditText editText_date;
     private static EditText editText_time;
     private Button button_set_date;
     private Button button_set_time;
+    private Button button_set_district;
 
     private Bitmap image;
 
     public interface OnAddFinish{
-        void OnAddFinish(String text);
         void OnAddFinish(Intent intent);
     }
 
@@ -67,16 +73,68 @@ public class AddFragment extends Fragment {
         editText_place = (EditText) view.findViewById(R.id.addLayout_editText_place);
         editText_date = (EditText) view.findViewById(R.id.addLayout_editText_date);
         editText_time = (EditText) view.findViewById(R.id.addLayout_editText_time);
+        selectedDistrict = (TextView) view.findViewById(R.id.addLayout_selectedDistrict);
 
         button_set_date = (Button) view.findViewById(R.id.addLayout_button_set_date);
         button_set_time = (Button) view.findViewById(R.id.addLayout_button_set_time);
+        button_set_district = (Button) view.findViewById(R.id.addLayout_button_setDistrict);
+
+        /*spinner = (Spinner) view.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.array_districts, android.R.layout.simple_spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinner_adapter);*/
 
         camera_image.setOnClickListener(onImageClick());
         button_set_date.setOnClickListener(onSetDateClick());
         button_set_time.setOnClickListener(onSetTimeClick());
-
+        button_set_district.setOnClickListener(onSetDistrictClick());
         return view;
 
+    }
+
+    @NonNull
+    private View.OnClickListener onSetDistrictClick() {
+
+
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final int[] clicked = new int[1];
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                        .setSingleChoiceItems(R.array.array_districts, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                clicked[0] = which;
+                            }
+                        })
+                        .setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String[] districts = getResources().getStringArray(R.array.array_districts);
+                                String district = districts[clicked[0]];
+
+                                selectedDistrict.setText(district);
+
+                                button_set_district.setVisibility(View.GONE);
+                                selectedDistrict.setVisibility(View.VISIBLE);
+
+                            }
+                        })
+                        .setNegativeButton(R.string.CANCEL, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                builder.create().show();
+            }
+
+
+        };
     }
 
     @NonNull
@@ -119,11 +177,13 @@ public class AddFragment extends Fragment {
 
                 Intent intent = new Intent();
 
+                Place place = new Place();
+
                 if (image != null)
-                    intent.putExtra("image", image);
+                    place.setImage(image);
 
                 if (!"".equals(editText_place.getText().toString()))
-                    intent.putExtra("place", editText_place.getText().toString());
+                    place.setPlace(editText_place.getText().toString());
 
                 String datetime = "";
 
@@ -133,10 +193,10 @@ public class AddFragment extends Fragment {
                 if (!"".equals(editText_date.getText().toString()))
                     datetime += "; " + editText_date.getText().toString();
 
-                intent.putExtra("datetime", datetime);
+                place.setDateTime(datetime);
+                place.setDistrict(selectedDistrict.getText().toString());
 
-                intent.putExtra("image", Util.bitmapToBYteArray(image));
-
+                intent.putExtra("place", place);
                 mActivity.OnAddFinish(intent);
 
                 return true;

@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void OnAddFinish(String text) {
-
-    }
-
-    @Override
     public void OnAddFinish(Intent intent) {
 
         viewFragment.addPlace(intent);
