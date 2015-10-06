@@ -1,12 +1,39 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
+    <style name="myTextView" parent="@android:style/TextAppearance.Small">
+
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#008</item>
 
     </style>
 
-    <style name="BlackText" parent="@android:style/TextAppearance">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+
+        <!--<item name="android:textColor">#ff0000</item>-->
+        <item name="android:listViewStyle">@style/ListViewStyle.Light</item>
+
+        <!--<item name="android:textViewStyle">@style/myTextView</item>-->
+        <!--<item name="android:textAppearance">@style/myTextView</item>-->
+
+    </style>
+
+    <style name="ListViewStyle.Light" parent="android:style/Widget.ListView">
+        <item name="android:divider">#999</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:textColor">#ff0000</item>
+    </style>
+
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ff0000</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="BlackText" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">#000</item>
     </style>
 

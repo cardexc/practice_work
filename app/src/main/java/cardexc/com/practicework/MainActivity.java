@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity
 
         viewFragment = new ViewFragment();
 
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, viewFragment)
                 .commit();
 
@@ -26,14 +26,28 @@ public class MainActivity extends AppCompatActivity
     public void OnAddFinish(Intent intent) {
 
         viewFragment.addPlace(intent);
-        getSupportFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
 
     }
 
     @Override
     public void DetailFragmentOnClose() {
 
-        getSupportFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getFragmentManager().popBackStack();
+        }
 
     }
 }

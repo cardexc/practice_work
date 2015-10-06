@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="spinner_use"
+        android:title="@string/label_preferences_spinner_use"
+        android:summary="@string/label_preferences_spinner_use_description"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>

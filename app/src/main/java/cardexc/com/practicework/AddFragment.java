@@ -8,12 +8,15 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +32,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Calendar;
 
 public class AddFragment extends Fragment {
@@ -42,15 +47,24 @@ public class AddFragment extends Fragment {
     private ImageView camera_image;
     private TextView selectedDistrict;
     private EditText editText_place;
+    private Spinner spinner;
     private static EditText editText_date;
     private static EditText editText_time;
     private Button button_set_date;
     private Button button_set_time;
     private Button button_set_district;
+    private Uri mImageUri;
 
     private Bitmap image;
 
-    public interface OnAddFinish{
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    public interface OnAddFinish {
         void OnAddFinish(Intent intent);
     }
 
@@ -79,15 +93,24 @@ public class AddFragment extends Fragment {
         button_set_time = (Button) view.findViewById(R.id.addLayout_button_set_time);
         button_set_district = (Button) view.findViewById(R.id.addLayout_button_setDistrict);
 
-        /*spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> spinner_adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.array_districts, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinner_adapter);*/
+        spinner.setAdapter(spinner_adapter);
 
         camera_image.setOnClickListener(onImageClick());
         button_set_date.setOnClickListener(onSetDateClick());
         button_set_time.setOnClickListener(onSetTimeClick());
         button_set_district.setOnClickListener(onSetDistrictClick());
+
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean spinner_use = defaultSharedPreferences.getBoolean("spinner_use", false);
+
+        if (spinner_use)
+            button_set_district.setVisibility(View.GONE);
+        else
+            spinner.setVisibility(View.GONE);
+
         return view;
 
     }
@@ -179,8 +202,8 @@ public class AddFragment extends Fragment {
 
                 Place place = new Place();
 
-                if (image != null)
-                    place.setImage(image);
+                if (mImageUri != null)
+                    place.setImagepath(mImageUri.getPath());
 
                 if (!"".equals(editText_place.getText().toString()))
                     place.setPlace(editText_place.getText().toString());
@@ -194,7 +217,16 @@ public class AddFragment extends Fragment {
                     datetime += "; " + editText_date.getText().toString();
 
                 place.setDateTime(datetime);
-                place.setDistrict(selectedDistrict.getText().toString());
+
+
+                boolean spinner_use = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getBoolean("spinner_use", false);
+
+                if (spinner_use)
+                    spinner.getSelectedItem().toString();
+                else
+                    place.setDistrict(selectedDistrict.getText().toString());
+
 
                 intent.putExtra("place", place);
                 mActivity.OnAddFinish(intent);
@@ -214,6 +246,22 @@ public class AddFragment extends Fragment {
     public void takePicture() {
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File photo;
+
+        try {
+            photo = Util.createTemporaryFile("picture", ".jpg");
+            photo.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Toast.makeText(getActivity(), "Please check SD card! Image shot is impossible!", Toast.LENGTH_LONG);
+            return;
+        }
+
+        mImageUri = Uri.fromFile(photo);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
@@ -223,8 +271,19 @@ public class AddFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            image = data.getParcelableExtra("data");
-            camera_image.setImageBitmap(image);
+
+            //use for small images*
+            if (data.getParcelableExtra("data") != null) {
+                image = data.getParcelableExtra("data");
+                camera_image.setImageBitmap(image);
+            } else {
+                try {
+                    Util.setImageToView(getActivity().getApplicationContext(), camera_image, mImageUri, 1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
 

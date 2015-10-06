@@ -11,8 +11,9 @@ public class DBContract {
         public static final String PLACE = "place";
         public static final String IMAGE = "image";
         public static final String DISTRICT = "district";
+        public static final String IMAGEPATH = "path_to_image";
 
-        public static final String[] COLUMNS = {DATETIME, PLACE, IMAGE, DISTRICT};
+        public static final String[] COLUMNS = {DATETIME, PLACE, IMAGE, DISTRICT, IMAGEPATH};
 
     }
 

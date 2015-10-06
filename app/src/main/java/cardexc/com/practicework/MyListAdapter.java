@@ -1,13 +1,16 @@
 package cardexc.com.practicework;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +40,9 @@ public class MyListAdapter extends ArrayAdapter<Place> {
 
         item_list_firstText.setText(places.get(position).getPlace());
         item_list_secondText.setText(places.get(position).getDateTime());
+
         item_list_image.setImageBitmap(places.get(position).getImage());
+
         return rowView;
 
     }

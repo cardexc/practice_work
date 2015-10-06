@@ -2,12 +2,15 @@ package cardexc.com.practicework.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import cardexc.com.practicework.DBContract.*;
 import cardexc.com.practicework.R;
@@ -36,10 +39,14 @@ public class AdvertisingCursorAdapter extends CursorAdapter {
         item_list_firstText.setText(String.format("%s (%s)", place, district));
 
         item_list_secondText.setText(cursor.getString(cursor.getColumnIndexOrThrow(AdvertisingEntry.DATETIME)));
-        item_list_image.setImageBitmap(
-                Util.byteArrayToBitmap(cursor.getBlob(cursor.getColumnIndexOrThrow(AdvertisingEntry.IMAGE)))
-        );
 
+        try {
+            File photo = new File(cursor.getString(cursor.getColumnIndexOrThrow(AdvertisingEntry.IMAGEPATH)));
+            Uri mImageUri = Uri.fromFile(photo);
+            Util.setImageToView(context, item_list_image, mImageUri,4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }

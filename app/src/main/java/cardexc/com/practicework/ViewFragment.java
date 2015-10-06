@@ -1,11 +1,11 @@
 package cardexc.com.practicework;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import cardexc.com.practicework.adapters.AdvertisingCursorAdapter;
+import cardexc.com.practicework.menu.Preferences;
 
 
 public class ViewFragment extends Fragment {
@@ -51,7 +52,7 @@ public class ViewFragment extends Fragment {
                 DetailFragment detailFragment = new DetailFragment();
                 detailFragment.setCursor((Cursor) parent.getItemAtPosition(position));
 
-                getActivity().getSupportFragmentManager().beginTransaction()
+                getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, detailFragment)
                         .addToBackStack(null)
                         .commit();
@@ -71,12 +72,22 @@ public class ViewFragment extends Fragment {
         switch (item.getItemId()) {
             case (R.id.action_add): {
 
-                getActivity().getSupportFragmentManager().beginTransaction()
+                getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new AddFragment())
                         .addToBackStack(null)
                         .commit();
 
                 return true;
+            }
+            case (R.id.action_settings): {
+
+                getActivity().getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new Preferences())
+                        .addToBackStack(null)
+                        .commit();
+
+                return true;
+
             }
         }
         return true;
@@ -90,7 +101,11 @@ public class ViewFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 }
 
 

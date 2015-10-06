@@ -1,10 +1,11 @@
 package cardexc.com.practicework;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import cardexc.com.practicework.DBContract.*;
 
@@ -29,7 +32,7 @@ public class DetailFragment extends Fragment {
         this.cursor = cursor;
     }
 
-    interface DetailFragmentOnClose{
+    interface DetailFragmentOnClose {
         void DetailFragmentOnClose();
     }
 
@@ -59,8 +62,13 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final byte[] blob = cursor.getBlob(cursor.getColumnIndexOrThrow(AdvertisingEntry.IMAGE));
-        image.setImageBitmap(Util.byteArrayToBitmap(blob));
+        try {
+            File photo = new File(cursor.getString(cursor.getColumnIndexOrThrow(AdvertisingEntry.IMAGEPATH)));
+            Uri mImageUri = Uri.fromFile(photo);
+            Util.setImageToView(getActivity().getApplicationContext(), image, mImageUri, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         datetime.setText(cursor.getString(cursor.getColumnIndexOrThrow(AdvertisingEntry.DATETIME)));
         place.setText(cursor.getString(cursor.getColumnIndexOrThrow(AdvertisingEntry.PLACE)));

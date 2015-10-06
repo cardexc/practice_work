@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Parcelable;
 
 import cardexc.com.practicework.DBContract.*;
 
 public class AdvertisingDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "AdvertisingDB";
 
     private final String Advertising_DROP_TABLE = "DROP TABLE IF EXISTS " + AdvertisingEntry.TABLE_NAME;
@@ -23,6 +22,7 @@ public class AdvertisingDBHelper extends SQLiteOpenHelper {
             + AdvertisingEntry.DATETIME + " TEXT, "
             + AdvertisingEntry.PLACE + " TEXT, "
             + AdvertisingEntry.DISTRICT + " TEXT, "
+            + AdvertisingEntry.IMAGEPATH + " TEXT, "
             + AdvertisingEntry.IMAGE + " BLOB "
             + " );";
 
@@ -61,8 +61,8 @@ public class AdvertisingDBHelper extends SQLiteOpenHelper {
 
         cv.put(AdvertisingEntry.PLACE, place.getPlace());
         cv.put(AdvertisingEntry.DATETIME, place.getDateTime());
-        cv.put(AdvertisingEntry.IMAGE, place.getImageArray());
         cv.put(AdvertisingEntry.DISTRICT, place.getDistrict());
+        cv.put(AdvertisingEntry.IMAGEPATH, place.getImagePath());
 
         SQLiteDatabase writableDatabase = getWritableDatabase();
 

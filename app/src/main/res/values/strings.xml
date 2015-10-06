@@ -6,6 +6,11 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="action_add">Add</string>
+
+    <string name="label_preferences_spinner_use">Spinner use</string>
+    <string name="label_preferences_spinner_use_description">Use spinner for district select</string>
+
+    <string name="action_settings">Settings</string>
     <string name="action_delete">DELETE</string>
 
     <string name="place">Place</string>

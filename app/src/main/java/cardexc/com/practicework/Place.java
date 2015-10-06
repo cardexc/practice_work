@@ -4,24 +4,35 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Place implements Parcelable{
+public class Place implements Parcelable {
 
     private String place;
 
 
-
+    private String imagepath;
     private String district;
     private String dateTime;
+
     private Bitmap image;
 
     public Place(String place, String district, String dateTime, Bitmap image) {
 
-        this.place    = place;
+        this.place = place;
         this.district = district;
         this.dateTime = dateTime;
         this.image = image;
 
     }
+
+    public Place(String place, String district, String dateTime, String imagepath) {
+
+        this.place = place;
+        this.imagepath = imagepath;
+        this.district = district;
+        this.dateTime = dateTime;
+
+    }
+
 
     public Place() {
 
@@ -63,6 +74,14 @@ public class Place implements Parcelable{
         return dateTime;
     }
 
+    public String getImagePath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
 
     @Override
     public int describeContents() {
@@ -74,6 +93,7 @@ public class Place implements Parcelable{
         dest.writeString(this.place);
         dest.writeString(this.district);
         dest.writeString(this.dateTime);
+        dest.writeString(this.imagepath);
 
         byte[] bytes = Util.bitmapToBYteArray(getImage());
         dest.writeInt(bytes.length);
@@ -85,6 +105,7 @@ public class Place implements Parcelable{
         this.place = in.readString();
         this.district = in.readString();
         this.dateTime = in.readString();
+        this.imagepath = in.readString();
 
         byte[] imageArray = new byte[in.readInt()];
         in.readByteArray(imageArray);
