@@ -273,7 +273,7 @@ public class AddFragment extends Fragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
 
             //use for small images*
-            if (data.getParcelableExtra("data") != null) {
+            if (data != null){
                 image = data.getParcelableExtra("data");
                 camera_image.setImageBitmap(image);
             } else {
