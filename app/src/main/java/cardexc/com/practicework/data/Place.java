@@ -1,8 +1,11 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.data;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import cardexc.com.practicework.sqlite.DBContract;
 
 public class Place implements Parcelable {
 
@@ -33,6 +36,12 @@ public class Place implements Parcelable {
 
     }
 
+    public Place(Cursor cursor) {
+        this.place = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.AdvertisingEntry.PLACE));
+        this.imagepath = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.AdvertisingEntry.IMAGEPATH));
+        this.district = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.AdvertisingEntry.DISTRICT));
+        this.dateTime = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.AdvertisingEntry.DATETIME));
+    }
 
     public Place() {
 

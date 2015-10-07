@@ -1,9 +1,10 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,8 +16,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import cardexc.com.practicework.R;
+import cardexc.com.practicework.activities.DetailActivity;
 import cardexc.com.practicework.adapters.AdvertisingCursorAdapter;
 import cardexc.com.practicework.menu.Preferences;
+import cardexc.com.practicework.sqlite.AdvertisingDBHelper;
+import cardexc.com.practicework.sqlite.DBContract;
 
 
 public class ViewFragment extends Fragment {
@@ -29,7 +34,7 @@ public class ViewFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        View view = inflater.inflate(R.layout.view_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_layout, container, false);
 
         ListView mainListView = (ListView) view.findViewById(R.id.mainListView);
         mainListView.setOnItemClickListener(onListItemClick());
@@ -49,14 +54,32 @@ public class ViewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                DetailFragment detailFragment = new DetailFragment();
-                detailFragment.setCursor((Cursor) parent.getItemAtPosition(position));
+                boolean use_tablayout_for_details = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getBoolean("use_tablayout_for_details", true);
 
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, detailFragment)
-                        .addToBackStack(null)
-                        .commit();
+                if (use_tablayout_for_details) {
 
+                    Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", position);
+
+                    Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                    intent.putExtras(bundle);
+
+                    startActivity(intent);
+
+                } else {
+
+
+                    DetailFragment detailFragment = new DetailFragment();
+                    detailFragment.setCursor((Cursor) parent.getItemAtPosition(position));
+
+                    getActivity().getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, detailFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
         };
     }

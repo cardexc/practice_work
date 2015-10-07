@@ -1,4 +1,4 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import java.io.File;
 
-import cardexc.com.practicework.DBContract.*;
+import cardexc.com.practicework.sqlite.AdvertisingDBHelper;
+import cardexc.com.practicework.sqlite.DBContract.*;
+import cardexc.com.practicework.R;
+import cardexc.com.practicework.data.Util;
 
 public class DetailFragment extends Fragment {
 
@@ -32,7 +35,7 @@ public class DetailFragment extends Fragment {
         this.cursor = cursor;
     }
 
-    interface DetailFragmentOnClose {
+    public interface DetailFragmentOnClose {
         void DetailFragmentOnClose();
     }
 
@@ -46,7 +49,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.detail_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_layout, container, false);
 
         setHasOptionsMenu(true);
 

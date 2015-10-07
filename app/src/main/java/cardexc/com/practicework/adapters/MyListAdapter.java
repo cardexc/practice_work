@@ -1,18 +1,18 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import cardexc.com.practicework.data.Place;
+import cardexc.com.practicework.R;
 
 public class MyListAdapter extends ArrayAdapter<Place> {
 
@@ -46,4 +46,6 @@ public class MyListAdapter extends ArrayAdapter<Place> {
         return rowView;
 
     }
+
+
 }

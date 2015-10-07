@@ -1,4 +1,4 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,9 +34,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
+
+import cardexc.com.practicework.data.Place;
+import cardexc.com.practicework.R;
+import cardexc.com.practicework.data.Util;
 
 public class AddFragment extends Fragment {
 
@@ -79,7 +82,7 @@ public class AddFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.add_layout, container, false);
+        View view = inflater.inflate(R.layout.fagment_add_layout, container, false);
 
         setHasOptionsMenu(true);
 

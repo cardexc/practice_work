@@ -1,4 +1,4 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.sqlite;
 
 import android.provider.BaseColumns;
 

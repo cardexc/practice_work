@@ -21,14 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="16dp"
-            style="@style/BlackText"/>
+            style="@style/TextViewColorGrey"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/item_list_secondText"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginBottom="16dp"
-            style="@style/BlackText"/>
+            style="@style/TextViewColorGrey"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            />
 
 
     </LinearLayout>

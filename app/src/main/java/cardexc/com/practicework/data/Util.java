@@ -1,4 +1,4 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.data;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -53,6 +53,23 @@ public class Util {
         imageView.setImageBitmap(bitmap);
 
     }
+
+    public static Bitmap getBitmapFromUri(Context context, Uri mImageUri, int inSampleSize) throws Exception {
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //if OutOfMemory Exception appears - read http://stackoverflow.com/questions/24135445/pre-guess-size-of-bitmap-from-the-actual-uri-before-scale-loading
+
+        AssetFileDescriptor fileDescriptor = null;
+        fileDescriptor = context.getContentResolver().openAssetFileDescriptor(mImageUri, "r");
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = inSampleSize;
+
+        return BitmapFactory.decodeFileDescriptor(fileDescriptor.getFileDescriptor(), null, options);
+
+    }
+
+
 
 
 }

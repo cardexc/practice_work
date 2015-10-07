@@ -1,8 +1,13 @@
-package cardexc.com.practicework;
+package cardexc.com.practicework.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import cardexc.com.practicework.R;
+import cardexc.com.practicework.fragments.ViewFragment;
+import cardexc.com.practicework.fragments.AddFragment;
+import cardexc.com.practicework.fragments.DetailFragment;
 
 public class MainActivity extends AppCompatActivity
     implements AddFragment.OnAddFinish, DetailFragment.DetailFragmentOnClose{

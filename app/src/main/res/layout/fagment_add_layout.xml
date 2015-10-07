@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/addLayout_button_setDistrict"
             android:text="@string/set_district"
-            style="@style/contact_raised_buttons"
+
             android:gravity="left|fill_vertical"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="6dp"
